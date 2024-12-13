@@ -11,8 +11,22 @@ export class RowsService {
     private readonly rowRepository: Repository<Row>,
   ) {}
 
-  async create(createRowDto: CreateRowDto): Promise<Row> {
+  async createRow(createRowDto: CreateRowDto): Promise<Row> {
     const row = this.rowRepository.create(createRowDto);
     return this.rowRepository.save(row);
+  }
+
+  async findAllRows(): Promise<Row[]> {
+    return this.rowRepository.find();
+  }
+
+  async findRow(id: number): Promise<Row> {
+    const row = this.rowRepository.findOneBy({ id });
+
+    if (!row) {
+      throw new Error(`Not found`);
+    }
+
+    return row;
   }
 }

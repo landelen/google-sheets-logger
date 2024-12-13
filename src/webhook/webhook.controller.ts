@@ -13,6 +13,6 @@ export class WebhookController {
   @Post()
   async handleWebhook(@Body() payload: CreateRowDto): Promise<void> {
     this.webhookService.handleWebhook(payload);
-    await this.rowService.create(payload);
+    await this.rowService.createRow(payload);
   }
 }
