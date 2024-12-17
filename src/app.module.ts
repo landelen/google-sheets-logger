@@ -6,6 +6,7 @@ import { WebhookModule } from './webhook/webhook.module';
 import { RowsModule } from './rows/rows.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './interceptors/logger.interceptor';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { LoggingInterceptor } from './interceptors/logger.interceptor';
     TypeOrmModule.forRootAsync(dbOptions()),
     WebhookModule,
     RowsModule,
+    EmailModule,
   ],
   controllers: [],
   providers: [
