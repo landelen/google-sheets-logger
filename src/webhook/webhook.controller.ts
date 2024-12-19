@@ -1,18 +1,25 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { WebhookService } from './webhook.service';
 import { CreateRowDto } from 'src/rows/dto/row.dto';
 import { RowsService } from 'src/rows/rows.service';
+import { EmailService } from 'src/email/email.service';
 
 @Controller('webhook')
 export class WebhookController {
+  private changes: CreateRowDto[] = [];
   constructor(
-    private readonly webhookService: WebhookService,
     private readonly rowService: RowsService,
+    private readonly mailService: EmailService,
   ) {}
 
   @Post()
   async handleWebhook(@Body() payload: CreateRowDto): Promise<void> {
-    this.webhookService.handleWebhook(payload);
+    this.changes.push(payload);
+
+    if (this.changes.length >= 3) {
+      this.mailService.sendMail();
+      this.changes = [];
+    }
+
     await this.rowService.createRow(payload);
   }
 }
