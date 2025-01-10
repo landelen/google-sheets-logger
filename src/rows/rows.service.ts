@@ -33,7 +33,7 @@ export class RowsService {
     return rows;
   }
 
-  async findRow(id: number): Promise<Row> {
+  async findRowById(id: number): Promise<Row> {
     const row = await this.rowRepository.findOneBy({ id });
 
     const cacheKey = `row_${id}`;

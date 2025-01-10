@@ -22,7 +22,7 @@ export class RowsController {
   async findOne(@Param('id') id: number): Promise<Row> {
     try {
       this.mailService.sendMail();
-      return await this.rowService.findRow(id);
+      return await this.rowService.findRowById(id);
     } catch (error) {
       throw new NotFoundException(error.message);
     }
